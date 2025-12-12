@@ -1,0 +1,31 @@
+{% include 'cabecalho.html' %}
+
+<h1>Lista de Professor</h1>
+
+<a href="/professor/form" class="btn btn-primary mb-3">Novo Professor</a>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>nome</th>
+            <th>Disciplina</th>
+            <th>Cpf</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for professor in lista %}
+        <tr>
+            <td>{{ professor.id }}</td>
+            <td>{{ professor.nome }}</td>
+            <td>{{ professor.disciplina }}</td>
+            <td>{{ professor.cpf }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+{% include 'rodape.html' %}
+
