@@ -2,16 +2,16 @@
 
 <h1>Formulário de Aluno</h1>
 
-<form action="/aluno/salvar/" method="post" class="mt-3">
+<form action="/aluno/salvar/{{aluno.id}}" method="post" class="mt-3">
 
     <div class="mb-3">
         <label class="form-label">Matrícula</label>
-        <input type="text" name="matricula" class="form-control" required>
+        <input type="text" name="matricula" class="form-control" value="{{aluno.matricula}}" required>
     </div>
 
     <div class="mb-3">
         <label class="form-label">Nome</label>
-        <input type="text" name="nome" class="form-control" required>
+        <input type="text" name="nome" class="form-control" value="{{aluno.nome}}" required>
     </div>
 
  

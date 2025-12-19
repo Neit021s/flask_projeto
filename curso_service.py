@@ -26,3 +26,22 @@ class CursoService:
 
     def listar(self):
         return self.lista
+    
+    def buscar_por_id(self, id):
+        for curso in self.lista: # percorre todos os cursos da lista
+            if curso.id == id:   # verifica se o ID bate com o que foi passado
+                return curso     # encontrou → retorna o curso
+        return None 
+
+    def atualizar(self, id, nome, nivel):
+        curso = self.buscar_por_id(id)
+        if curso:
+            curso.nome = nome
+            curso.nivel = nivel
+
+    def remover(self, id):
+        for curso in self.lista:
+            if curso.id == id:
+                self.lista.remove(curso)
+                break 
+

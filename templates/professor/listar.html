@@ -11,6 +11,7 @@
             <th>nome</th>
             <th>Disciplina</th>
             <th>Cpf</th>
+            <th>Ações</th>
         </tr>
     </thead>
 
@@ -21,6 +22,14 @@
             <td>{{ professor.nome }}</td>
             <td>{{ professor.disciplina }}</td>
             <td>{{ professor.cpf }}</td>
+            <td>
+                <a href="/professor/editar/{{ professor.id }}" class="btn btn-success">Alterar</a>
+                <a
+                    href="/professor/remover/{{ professor.id }}"
+                    onclick="return confirm('Tem certeza que deseja remover este registro?');"
+                    class="btn btn-danger">Remover
+                </a>
+            </td>
         </tr>
         {% endfor %}
     </tbody>

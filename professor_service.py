@@ -27,3 +27,24 @@ class ProfessorService:
 
     def listar(self):
         return self.lista
+    
+    def buscar_por_id(self, id):
+        for professor in self.lista: # percorre todos os professores da lista
+            if professor.id == id:   # verifica se o ID bate com o que foi passado
+                return professor     # encontrou → retorna o professor
+        return None 
+    
+    def atualizar(self, id, nome, cpf, disciplina):
+        professor = self.buscar_por_id(id)
+        if professor:
+            professor.nome = nome
+            professor.cpf = cpf
+            professor.disciplina = disciplina
+        
+    def remover(self, id):
+        for professor in self.lista:
+            if professor.id == id:
+                self.lista.remove(professor)
+                break 
+
+

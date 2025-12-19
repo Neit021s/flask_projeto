@@ -26,3 +26,22 @@ class AlunoService:
 
     def listar(self):
         return self.lista
+    
+    def buscar_por_id(self, id):
+        for aluno in self.lista: # percorre todos os alunos da lista
+            if aluno.id == id:   # verifica se o ID bate com o que foi passado
+                return aluno     # encontrou → retorna o aluno
+        return None 
+
+    def atualizar(self, id, nome, matricula):
+        aluno = self.buscar_por_id(id)
+        if aluno:
+            aluno.nome = nome
+            aluno.matricula = matricula
+
+    def remover(self, id):
+        for aluno in self.lista:
+            if aluno.id == id:
+                self.lista.remove(aluno)
+                break 
+
