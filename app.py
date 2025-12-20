@@ -37,10 +37,10 @@ def listar_curso():
     lista = curso_service.listar()
     return render_template("curso/listar.html", lista=lista)
 
-@app.route("/disciplinas")
-def listar_disciplinas():
+@app.route("/disciplina")
+def listar_disciplina():
     lista = disciplina_service.listar()
-    return render_template("disciplinas/listar.html", lista=lista)
+    return render_template("disciplina/listar.html", lista=lista)
 
 #----------------------------------------------------------------------
 
@@ -59,37 +59,6 @@ def salvar_aluno():
     # Redireciona para a lista
     return redirect('/aluno')
 
-@app.route("/curso/form")
-def novo_curso():
-    return render_template("curso/form.html", curso=None)
-
-@app.route("/curso/salvar/", methods=["POST"])
-def salvar_curso():
-    nome = request.form.get("nome")
-    nivel = request.form.get("nivel")
-
-    # Salva no service
-    curso_service.adicionar(nome, nivel)
-
-    # Redireciona para a lista
-    return redirect('/aluno')
-
-@app.route("/professor/form")
-def novo_professor():
-    return render_template("professor/form.html", professor=None)
-
-@app.route("/professor/salvar/", methods=["POST"])
-def salvar_professor():
-    nome = request.form.get("nome")
-    disciplina = request.form.get("disciplina")
-    cpf = request.form.get("cpf")
-
-    # Salva no service
-    professor_service.adicionar(nome, disciplina, cpf)
-
-    # Redireciona para a lista
-    return redirect('/professor')
-
 @app.route("/aluno/editar/<int:id>")
 def editar_aluno(id):
     aluno = aluno_service.buscar_por_id(id)
@@ -107,6 +76,21 @@ def remover_aluno(id):
     aluno_service.remover(id)
     return redirect('/aluno')
 #---------------------------------------------------
+@app.route("/curso/form")
+def novo_curso():
+    return render_template("curso/form.html", curso=None)
+
+@app.route("/curso/salvar/", methods=["POST"])
+def salvar_curso():
+    nome = request.form.get("nome")
+    nivel = request.form.get("nivel")
+
+    # Salva no service
+    curso_service.adicionar(nome, nivel)
+
+    # Redireciona para a lista
+    return redirect('/curso')
+
 @app.route("/curso/editar/<int:id>")
 def editar_curso(id):
     curso = curso_service.buscar_por_id(id)
@@ -124,6 +108,22 @@ def remover_curso(id):
     curso_service.remover(id)
     return redirect('/curso')
 #---------------------------------------------------
+@app.route("/professor/form")
+def novo_professor():
+    return render_template("professor/form.html", professor=None)
+
+@app.route("/professor/salvar/", methods=["POST"])
+def salvar_professor():
+    nome = request.form.get("nome")
+    disciplina = request.form.get("disciplina")
+    cpf = request.form.get("cpf")
+
+    # Salva no service
+    professor_service.adicionar(nome, disciplina, cpf)
+
+    # Redireciona para a lista
+    return redirect('/professor')
+
 @app.route("/professor/editar/<int:id>")
 def editar_professor(id):
     professor = professor_service.buscar_por_id(id)
@@ -144,37 +144,40 @@ def remover_professor(id):
 
 #---------------------------------------------------
 
-@app.route("/disciplinas/form")
-def novo_disciplinas():
-    return render_template("disciplinas/form.html", disciplinas=None)
+@app.route("/disciplina/form")
+def nova_disciplina():
+    return render_template("disciplina/form.html", disciplina=None)
 
-@app.route("/disciplinas/salvar/", methods=["POST"])
-def salvar_disciplinas():
+@app.route("/disciplina/salvar/", methods=["POST"])
+def salvar_disciplina():
     nome = request.form.get("nome")
     carga_horaria = request.form.get("carga_horaria")
+    ementa = request.form.get("ementa")
 
     # Salva no service
-    disciplina_service.adicionar(nome, carga_horaria)
+    disciplina_service.adicionar(nome, carga_horaria, ementa)
 
     # Redireciona para a lista
-    return redirect('/disciplinas')
+    return redirect('/disciplina')
 
-@app.route("/disciplinas/editar/<int:id>")
-def editar_disciplinas(id):
-    disciplinas = disciplina_service.buscar_por_id(id)
-    return render_template("disciplinas/form.html", disciplinas=disciplinas)
+@app.route("/disciplina/editar/<int:id>")
+def editar_disciplina(id):
+    disciplina = disciplina_service.buscar_por_id(id)
+    return render_template("disciplina/form.html", disciplina=disciplina)
 
-@app.route("/disciplinas/salvar/<int:id>", methods=["POST"])
-def atualizar_disciplinas(id):
+@app.route("/disciplina/salvar/<int:id>", methods=["POST"])
+def atualizar_disciplina(id):
     nome = request.form["nome"]
     carga_horaria = request.form["carga_horaria"]
-    disciplina_service.atualizar(id, nome, carga_horaria)
-    return redirect('/disciplinas')
+    ementa = request.form["ementa"]
+    disciplina_service.atualizar(id, nome, carga_horaria, ementa)
+    return redirect('/disciplina')
 
-@app.route("/disciplinas/remover/<int:id>")
-def remover_disciplinas(id):
+@app.route("/disciplina/remover/<int:id>")
+def remover_disciplina(id):
     disciplina_service.remover(id)
-    return redirect('/disciplinas')
+    return redirect('/disciplina')
+
 
 
 

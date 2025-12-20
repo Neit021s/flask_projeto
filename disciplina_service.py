@@ -1,10 +1,11 @@
-# aluno_service.py
+# disciplina_service.py
 
 class Disciplina:
-    def __init__(self, id, nome, carga_horaria):
+    def __init__(self, id, nome, carga_horaria, ementa):
         self.id = id
         self.nome = nome
         self.carga_horaria = carga_horaria
+        self.ementa = ementa
 
 
 class DisciplinaService:
@@ -13,36 +14,35 @@ class DisciplinaService:
         self.proximo_id = 1
 
         # ---- Dados iniciais (comente se não quiser) ----
-        self.adicionar("Enfermagem", "40")
-        self.adicionar("Teologia", "32")
-        self.adicionar("Filosofia", "10")
+        self.adicionar("Biologia", "40","Introdução a Anatomia")
+        self.adicionar("Teologia", "32", "Aprofundamento em Sistemática")
+        self.adicionar("Filosofia", "10", "Ética, Lógica e Política")
         # -------------------------------------------------
 
-    def adicionar(self, nome, carga_horaria):
+    def adicionar(self, nome, carga_horaria, ementa):
         id = self.proximo_id
-        disciplinas = Disciplina(id, nome, carga_horaria)
-        self.lista.append(disciplinas)
+        disciplina = Disciplina(id, nome, carga_horaria, ementa)
+        self.lista.append(disciplina)
         self.proximo_id += 1
 
     def listar(self):
         return self.lista
     
     def buscar_por_id(self, id):
-        for disciplinas in self.lista: # percorre todos as disciplinas da lista
-            if disciplinas.id == id:   # verifica se o ID bate com o que foi passado
-                return disciplinas     # encontrou → retorna o disciplinas
+        for disciplina in self.lista: # percorre todos as disciplinas da lista
+            if disciplina.id == id:   # verifica se o ID bate com o que foi passado
+                return disciplina     # encontrou → retorna o disciplinas
         return None 
     
-    def atualizar(id, nome, carga_horaria):
-        disciplinas = self.buscar_por_id(id)
-        if disciplinas:
-            disciplinas.nome = nome
-            disciplinas.carga_horaria = carga_horaria
+    def atualizar(self, id, nome, carga_horaria, ementa):
+        disciplina = self.buscar_por_id(id)
+        if disciplina:
+            disciplina.nome = nome
+            disciplina.carga_horaria = carga_horaria
+            disciplina.ementa = ementa
 
     def remover(self, id):
-        for disciplinas in self.lista:
-            if disciplinas.id == id:
-                self.lista.remove(disciplinas)
+        for disciplina in self.lista:
+            if disciplina.id == id:
+                self.lista.remove(disciplina)
                 break 
-
-

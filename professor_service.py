@@ -1,4 +1,4 @@
-# aluno_service.py
+# professor_service.py
 
 class Professor:
     def __init__(self, id, nome, cpf, disciplina):
@@ -15,8 +15,8 @@ class ProfessorService:
 
         # ---- Dados iniciais (comente se não quiser) ----
         self.adicionar("Maria Silva", "123.456.789-09.", "Informática")
-        self.adicionar("João Pereir", "123.456.789-09.", "Matemática")
-        self.adicionar("Ana Cost", "123.456.789-09.", "Gastronomia")
+        self.adicionar("João Pereira", "123.456.789-09.", "Matemática")
+        self.adicionar("Ana Costa", "123.456.789-09.", "Gastronomia")
         # -------------------------------------------------
 
     def adicionar(self, nome, cpf, disciplina):
