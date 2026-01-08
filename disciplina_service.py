@@ -20,6 +20,11 @@ class DisciplinaService:
         # -------------------------------------------------
 
     def adicionar(self, nome, carga_horaria, ementa):
+        if not nome.strip() or not carga_horaria.strip():
+            raise Exception("Nome e carga horára são campos obrigatórios")
+        for disciplina in self.lista:
+            if disciplina.nome == nome:
+                raise Exception("Essa disciplina já existe")
         id = self.proximo_id
         disciplina = Disciplina(id, nome, carga_horaria, ementa)
         self.lista.append(disciplina)

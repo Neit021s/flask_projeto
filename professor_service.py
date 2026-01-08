@@ -14,14 +14,19 @@ class ProfessorService:
         self.proximo_id = 1
 
         # ---- Dados iniciais (comente se não quiser) ----
-        self.adicionar("Maria Silva", "123.456.789-09.", "Informática")
-        self.adicionar("João Pereira", "123.456.789-09.", "Matemática")
-        self.adicionar("Ana Costa", "123.456.789-09.", "Gastronomia")
+        self.adicionar("Maria Silva", "123.456.789-09", "Informática")
+        self.adicionar("João Pereira", "123.436.789-09", "Matemática")
+        self.adicionar("Ana Costa", "123.454.789-09", "Gastronomia")
         # -------------------------------------------------
 
     def adicionar(self, nome, cpf, disciplina):
+        if not nome.strip() or not cpf.strip() or not disciplina.strip():
+            raise Exception("Todos os campos são obrigatórios")
+        for professor in self.lista:
+            if professor.cpf == cpf:
+                raise Exception("O CPF já existe")
         id = self.proximo_id
-        professor = Professor(id, nome, disciplina, cpf)
+        professor = Professor(id, nome, cpf, disciplina)
         self.lista.append(professor)
         self.proximo_id += 1
 

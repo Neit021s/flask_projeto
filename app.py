@@ -1,8 +1,8 @@
 from flask import Flask, render_template, request, redirect
-from aluno_service import AlunoService
-from professor_service import ProfessorService
+from aluno_service import Aluno, AlunoService
+from professor_service import Professor, ProfessorService
 from curso_service import CursoService
-from disciplina_service import DisciplinaService
+from disciplina_service import Disciplina, DisciplinaService
 
 app = Flask(__name__)
 professor_service = ProfessorService()
@@ -50,11 +50,14 @@ def novo_aluno():
 
 @app.route("/aluno/salvar/", methods=["POST"])
 def salvar_aluno():
-    matricula = request.form.get("matricula")
     nome = request.form.get("nome")
+    matricula = request.form.get("matricula")
+    try:
+        aluno_service.adicionar(nome, matricula)
+    except  Exception as e:
+        aluno = Aluno('',nome,matricula)
+        return render_template("aluno/form.html",aluno=aluno, erro=str(e))
 
-    # Salva no service
-    aluno_service.adicionar(matricula, nome)
 
     # Redireciona para a lista
     return redirect('/aluno')
@@ -115,13 +118,13 @@ def novo_professor():
 @app.route("/professor/salvar/", methods=["POST"])
 def salvar_professor():
     nome = request.form.get("nome")
-    disciplina = request.form.get("disciplina")
     cpf = request.form.get("cpf")
-
-    # Salva no service
-    professor_service.adicionar(nome, disciplina, cpf)
-
-    # Redireciona para a lista
+    disciplina = request.form.get("disciplina")
+    try:
+        professor_service.adicionar(nome, cpf, disciplina)
+    except  Exception as e:
+        professor = Professor('',nome,cpf, disciplina)
+        return render_template("professor/form.html",professor=professor, erro=str(e))
     return redirect('/professor')
 
 @app.route("/professor/editar/<int:id>")
@@ -153,11 +156,11 @@ def salvar_disciplina():
     nome = request.form.get("nome")
     carga_horaria = request.form.get("carga_horaria")
     ementa = request.form.get("ementa")
-
-    # Salva no service
-    disciplina_service.adicionar(nome, carga_horaria, ementa)
-
-    # Redireciona para a lista
+    try:
+        disciplina_service.adicionar(nome, carga_horaria, ementa)
+    except  Exception as e:
+        disciplina = Disciplina('',nome,carga_horaria, ementa)
+        return render_template("disciplina/form.html",disciplina=disciplina, erro=str(e))
     return redirect('/disciplina')
 
 @app.route("/disciplina/editar/<int:id>")
