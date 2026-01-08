@@ -20,8 +20,7 @@ class AlunoService:
 
     def adicionar(self, nome, matricula):
         if not nome.strip() or not matricula.strip():
-            raise Exception("Nome e matrícula são obrigatórios")
-            
+            raise Exception("Nome e matrícula são obrigatórios")           
         for aluno in self.lista:
             if aluno.matricula == matricula:
                 raise Exception("Matrícula já existe")
