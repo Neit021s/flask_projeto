@@ -55,7 +55,7 @@ def salvar_aluno():
     try:
         aluno_service.adicionar(nome, matricula)
     except  Exception as e:
-        aluno = Aluno('',nome,matricula)
+        aluno = Aluno('',matricula,nome)
         return render_template("aluno/form.html",aluno=aluno, erro=str(e))
 
 

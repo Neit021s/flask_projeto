@@ -13,9 +13,9 @@ class AlunoService:
         self.proximo_id = 1
 
         # ---- Dados iniciais (comente se não quiser) ----
-        self.adicionar("2023001","Maria Silva")
-        self.adicionar("2023002","João Pereira")
-        self.adicionar("2023003","Ana Costa")
+        self.adicionar("Maria Silva","2023001")
+        self.adicionar("João Pereira","2023002")
+        self.adicionar("Ana Costa","2023003")
         # -------------------------------------------------
 
     def adicionar(self, nome, matricula):
@@ -25,7 +25,7 @@ class AlunoService:
             if aluno.matricula == matricula:
                 raise Exception("Matrícula já existe")
         id = self.proximo_id
-        aluno = Aluno(id, nome, matricula)
+        aluno = Aluno(id, matricula, nome)
         self.lista.append(aluno)
         self.proximo_id += 1
 
