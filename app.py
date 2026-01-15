@@ -71,13 +71,21 @@ def editar_aluno(id):
 def atualizar_aluno(id):
     nome = request.form["nome"]
     matricula = request.form["matricula"]
-    aluno_service.atualizar(id, nome, matricula)
+    try:
+        # código que pode gerar erro
+        aluno_service.atualizar(id, nome, matricula)
+        
+    except  Exception as e:
+        # código executado se ocorrer erro
+        aluno = Aluno(id,nome,matricula)
+        return render_template("aluno/form.html",aluno=aluno, erro=str(e))    
     return redirect('/aluno')
 
 @app.route("/aluno/remover/<int:id>")
 def remover_aluno(id):
     aluno_service.remover(id)
     return redirect('/aluno')
+
 #---------------------------------------------------
 @app.route("/curso/form")
 def novo_curso():
