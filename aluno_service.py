@@ -1,10 +1,10 @@
 # aluno_service.py
 
 class Aluno:
-    def __init__(self, id, matricula, nome):
+    def __init__(self, id, nome,  matricula):
         self.id = id
-        self.matricula = matricula
         self.nome = nome
+        self.matricula = matricula
 
 
 class AlunoService:
@@ -18,12 +18,12 @@ class AlunoService:
         self.adicionar("Ana Costa","2023003")
         # -------------------------------------------------
 
-    def adicionar(self, nome, matricula):
+    def adicionar (self, nome, matricula):
         self._validar_dados(nome, matricula)
         id = self.proximo_id
         aluno = Aluno(id, nome, matricula)
         self.lista.append(aluno)
-        self.promixo_id += 1
+        self.proximo_id += 1
 
     def listar(self):
         return self.lista

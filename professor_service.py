@@ -17,14 +17,12 @@ class ProfessorService:
         self.adicionar("Maria Silva", "123.456.789-09", "Informática")
         self.adicionar("João Pereira", "123.436.789-09", "Matemática")
         self.adicionar("Ana Costa", "123.454.789-09", "Gastronomia")
-        # -------------------------------------------------
+        # ---------
+        # ----------------------------------------
+        
 
-    def adicionar(self, nome, cpf, disciplina):
-        if not nome.strip() or not cpf.strip() or not disciplina.strip():
-            raise Exception("Todos os campos são obrigatórios")
-        for professor in self.lista:
-            if professor.cpf == cpf:
-                raise Exception("O CPF já existe")
+    def adicionar (self, nome, cpf, disciplina):
+        self._validar_dados(nome, cpf, disciplina)
         id = self.proximo_id
         professor = Professor(id, nome, cpf, disciplina)
         self.lista.append(professor)
@@ -51,5 +49,18 @@ class ProfessorService:
             if professor.id == id:
                 self.lista.remove(professor)
                 break 
+
+    def _validar_dados(self, nome, cpf, disciplina, id=None):
+        if not nome or not cpf or not disciplina:
+            raise Exception("Nome, cpf e discilina são obrigatórios")
+
+
+        for professor in self.lista:
+            if professor.cpf == cpf:
+                # id is None -> referente ao método adicionar
+                # aluno.id != id -> desconsidera se aluno for o mesmo que está sendo alterado
+                if id is None or professor.id != id:
+                    raise Exception("Cpf já existe")
+
 
 

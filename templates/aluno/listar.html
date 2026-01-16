@@ -8,8 +8,8 @@
     <thead class="table-dark">
         <tr>
             <th>ID</th>
-            <th>Matrícula</th>
             <th>Nome</th>
+            <th>Matrícula</th>
             <th>Ações</th>
         </tr>
     </thead>
@@ -18,8 +18,8 @@
         {% for aluno in lista %}
         <tr>
             <td>{{ aluno.id }}</td>
-            <td>{{ aluno.matricula }}</td>
             <td>{{ aluno.nome }}</td>
+            <td>{{ aluno.matricula }}</td>
             <td>
                 <a href="/aluno/editar/{{ aluno.id }}" class="btn btn-success">Alterar</a>
                 <a

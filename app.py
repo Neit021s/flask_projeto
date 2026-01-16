@@ -55,7 +55,7 @@ def salvar_aluno():
     try:
         aluno_service.adicionar(nome, matricula)
     except  Exception as e:
-        aluno = Aluno('',matricula,nome)
+        aluno = Aluno('',nome,matricula)
         return render_template("aluno/form.html",aluno=aluno, erro=str(e))
 
 
@@ -152,6 +152,22 @@ def atualizar_professor(id):
 def remover_professor(id):
     professor_service.remover(id)
     return redirect('/professor')
+
+@app.route("/professor/salvar/<int:id>", methods=["POST"])
+def atualizar_professor(id):
+    nome = request.form["nome"]
+    cpf = request.form["cpf"]
+    disciplina = request.form["disciplina"]
+    try:
+        # código que pode gerar erro
+        professor_service.atualizar(id, nome, cpf, disciplina)
+        
+    except  Exception as e:
+        # código executado se ocorrer erro
+        professor = Professor(id,nome,cpf,disciplina)
+        return render_template("professor/form.html",professor=professor, erro=str(e))    
+    return redirect('/professor')
+
 
 #---------------------------------------------------
 
