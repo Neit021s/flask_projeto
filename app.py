@@ -95,12 +95,16 @@ def novo_curso():
 def salvar_curso():
     nome = request.form.get("nome")
     nivel = request.form.get("nivel")
+    try:
+        curso_service.adicionar(nome, nivel)
+    except  Exception as e:
+        curso = Curso('',nome,nivel)
+        return render_template("curso/form.html",curso=curso, erro=str(e))
 
-    # Salva no service
-    curso_service.adicionar(nome, nivel)
 
     # Redireciona para a lista
     return redirect('/curso')
+
 
 @app.route("/curso/editar/<int:id>")
 def editar_curso(id):
@@ -140,14 +144,6 @@ def editar_professor(id):
     professor = professor_service.buscar_por_id(id)
     return render_template("professor/form.html", professor=professor)
 
-@app.route("/professor/salvar/<int:id>", methods=["POST"])
-def atualizar_professor(id):
-    nome = request.form["nome"]
-    cpf = request.form["cpf"]
-    disciplina = request.form["disciplina"]
-    professor_service.atualizar(id, nome, cpf, disciplina)
-    return redirect('/professor')
-
 @app.route("/professor/remover/<int:id>")
 def remover_professor(id):
     professor_service.remover(id)
@@ -162,7 +158,7 @@ def atualizar_professor(id):
         # código que pode gerar erro
         professor_service.atualizar(id, nome, cpf, disciplina)
         
-    except  Exception as e:
+    except Exception as e:
         # código executado se ocorrer erro
         professor = Professor(id,nome,cpf,disciplina)
         return render_template("professor/form.html",professor=professor, erro=str(e))    

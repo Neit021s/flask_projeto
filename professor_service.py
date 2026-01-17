@@ -38,6 +38,7 @@ class ProfessorService:
         return None 
     
     def atualizar(self, id, nome, cpf, disciplina):
+        self._validar_dados(nome,cpf,disciplina)
         professor = self.buscar_por_id(id)
         if professor:
             professor.nome = nome

@@ -18,7 +18,8 @@ class CursoService:
         self.adicionar("Enfermagem", "Superior")
         # -------------------------------------------------
 
-    def adicionar(self, nome, nivel):
+    def adicionar (self, nome, nivel):
+        self._validar_dados( nome, nivel)
         id = self.proximo_id
         curso = Curso(id, nome, nivel)
         self.lista.append(curso)
@@ -34,6 +35,7 @@ class CursoService:
         return None 
 
     def atualizar(self, id, nome, nivel):
+        self._validar_dados( nome, nivel)
         curso = self.buscar_por_id(id)
         if curso:
             curso.nome = nome
@@ -44,4 +46,17 @@ class CursoService:
             if curso.id == id:
                 self.lista.remove(curso)
                 break 
+
+    def _validar_dados(self, nome, nivel, id=None):
+        if not nome or not nivel:
+            raise Exception("Nome e nivel são obrigatórios")
+
+
+        for curso in self.lista:
+            if curso.nivel == nivel:
+                # id is None -> referente ao método adicionar
+                # aluno.id != id -> desconsidera se aluno for o mesmo que está sendo alterado
+                if id is None or curso.id != id:
+                    raise Exception("nivel já existe")
+
 
