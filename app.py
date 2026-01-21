@@ -1,17 +1,23 @@
 from flask import Flask, render_template, request, redirect
 from aluno_service import Aluno, AlunoService
 from professor_service import Professor, ProfessorService
-from curso_service import CursoService
+from curso_service import Curso, CursoService
 from disciplina_service import Disciplina, DisciplinaService
+from usuario_service import Usuario, UsuarioService
 
 app = Flask(__name__)
 professor_service = ProfessorService()
 aluno_service = AlunoService()
 curso_service = CursoService()
 disciplina_service = DisciplinaService()
+usuario_service = UsuarioService()
 
 @app.route('/')
 def home():
+    return render_template("login.html")
+
+@app.route('/index')
+def index():
     return render_template("index.html")
 
 @app.route('/sobre')
@@ -41,6 +47,22 @@ def listar_curso():
 def listar_disciplina():
     lista = disciplina_service.listar()
     return render_template("disciplina/listar.html", lista=lista)
+
+@app.route("/autenticar", methods=["POST"])
+def autenticar():
+    login = request.form.get("login")
+    senha = request.form.get("senha")
+    try:
+        # código que pode gerar erro na autenticação
+         usuario = usuario_service.autenticar(login, senha)
+    except  Exception as e:
+        # código executado se ocorrer erro
+        return render_template("login.html", erro=str(e))    
+    return render_template("index.html")
+
+@app.route("/logout")
+def logout():
+    return redirect("/")
 
 #----------------------------------------------------------------------
 
@@ -115,7 +137,14 @@ def editar_curso(id):
 def atualizar_curso(id):
     nome = request.form["nome"]
     nivel = request.form["nivel"]
-    curso_service.atualizar(id, nome, nivel)
+    try:
+        # código que pode gerar erro
+        curso_service.atualizar(id, nome, nivel)
+        
+    except  Exception as e:
+        # código executado se ocorrer erro
+        curso = Curso(id,nome,nivel)
+        return render_template("curso/form.html",curso=curso, erro=str(e))    
     return redirect('/curso')
 
 @app.route("/curso/remover/<int:id>")
@@ -193,7 +222,14 @@ def atualizar_disciplina(id):
     nome = request.form["nome"]
     carga_horaria = request.form["carga_horaria"]
     ementa = request.form["ementa"]
-    disciplina_service.atualizar(id, nome, carga_horaria, ementa)
+    try:
+        # código que pode gerar erro
+        disciplina_service.atualizar(id, nome, carga_horaria, ementa)
+        
+    except  Exception as e:
+        # código executado se ocorrer erro
+        disciplina = Disciplina(id, nome, carga_horaria, ementa)
+        return render_template("disciplina/form.html",disciplina=disciplina, erro=str(e))    
     return redirect('/disciplina')
 
 @app.route("/disciplina/remover/<int:id>")

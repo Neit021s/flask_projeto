@@ -19,7 +19,7 @@ class CursoService:
         # -------------------------------------------------
 
     def adicionar (self, nome, nivel):
-        self._validar_dados( nome, nivel)
+        self._validar_dados(nome, nivel)
         id = self.proximo_id
         curso = Curso(id, nome, nivel)
         self.lista.append(curso)
@@ -35,7 +35,7 @@ class CursoService:
         return None 
 
     def atualizar(self, id, nome, nivel):
-        self._validar_dados( nome, nivel)
+        self._validar_dados(nome, nivel,id)
         curso = self.buscar_por_id(id)
         if curso:
             curso.nome = nome
@@ -53,10 +53,10 @@ class CursoService:
 
 
         for curso in self.lista:
-            if curso.nivel == nivel:
+            if curso.nome == nome:
                 # id is None -> referente ao método adicionar
                 # aluno.id != id -> desconsidera se aluno for o mesmo que está sendo alterado
                 if id is None or curso.id != id:
-                    raise Exception("nivel já existe")
+                    raise Exception("Curso já existe")
 
 
